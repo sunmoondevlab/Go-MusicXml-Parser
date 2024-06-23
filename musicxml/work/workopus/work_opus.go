@@ -1,4 +1,4 @@
-package musicxml
+package workopus
 
 import (
 	"encoding/xml"

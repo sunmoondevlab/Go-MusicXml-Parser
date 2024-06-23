@@ -7,16 +7,25 @@
     <opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="none"/>
     </work>
   <identification>
-    <creator type="composer">作曲者 / 編曲者</creator>
+    <creator type="composer">作曲者:composs</creator>
+    <creator type="lyricist">作詞者:lilly</creator>
+    <rights>Copyright © 2024 Hogeran A.Fugas</rights>
     <encoding>
+      <encoder>Hogeran A.Fugas</encoder>
       <software>MuseScore 4.3.2</software>
       <encoding-date>2024-06-21</encoding-date>
+      <encoding-description>MusicXML example</encoding-description>
       <supports element="accidental" type="yes"/>
       <supports element="beam" type="yes"/>
       <supports element="print" attribute="new-page" type="no"/>
       <supports element="print" attribute="new-system" type="no"/>
       <supports element="stem" type="yes"/>
       </encoding>
+    <source>Based on A. Abbb Abbb of 1000, republished by Dover in 1000.</source>
+    <relation>urn:ISBN:0-000-00000-0</relation>
+    <miscellaneous>
+        <miscellaneous-field name="difficulty-level">3</miscellaneous-field>
+      </miscellaneous>
     </identification>
   <defaults>
     <scaling>

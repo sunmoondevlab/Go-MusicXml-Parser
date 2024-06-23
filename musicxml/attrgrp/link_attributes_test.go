@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/sunmoondevlab/Go-MusicXml-Parser/musicxml"
 	"github.com/sunmoondevlab/Go-MusicXml-Parser/musicxml/attrgrp"
 	"github.com/sunmoondevlab/Go-MusicXml-Parser/musicxml/enum"
+	tWorkOpus "github.com/sunmoondevlab/Go-MusicXml-Parser/musicxml/work/workopus"
 )
 
 func TestUnmarshalLinkAttributes(t *testing.T) {
@@ -35,55 +35,55 @@ func TestUnmarshalLinkAttributes(t *testing.T) {
 					},
 					Attr: []xml.Attr{},
 				},
-				l:  &musicxml.WorkOpus{},
-				lr: &musicxml.WorkOpusRaw{},
+				l:  &tWorkOpus.WorkOpus{},
+				lr: &tWorkOpus.WorkOpusRaw{},
 			},
 			wantErr: true,
-			wantObj: &musicxml.WorkOpus{},
+			wantObj: &tWorkOpus.WorkOpus{},
 		},
 		{
 			name: "work>opus invalid type",
 			args: args{
 				d:     xml.NewDecoder(bytes.NewReader([]byte(`<opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simpl" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="none"/>`))),
 				start: xml.StartElement{},
-				l:     &musicxml.WorkOpus{},
-				lr:    &musicxml.WorkOpusRaw{},
+				l:     &tWorkOpus.WorkOpus{},
+				lr:    &tWorkOpus.WorkOpusRaw{},
 			},
 			wantErr: true,
-			wantObj: &musicxml.WorkOpus{},
+			wantObj: &tWorkOpus.WorkOpus{},
 		},
 		{
 			name: "work>opus invalid show",
 			args: args{
 				d:     xml.NewDecoder(bytes.NewReader([]byte(`<opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="ne" xlink:actuate="none"/>`))),
 				start: xml.StartElement{},
-				l:     &musicxml.WorkOpus{},
-				lr:    &musicxml.WorkOpusRaw{},
+				l:     &tWorkOpus.WorkOpus{},
+				lr:    &tWorkOpus.WorkOpusRaw{},
 			},
 			wantErr: true,
-			wantObj: &musicxml.WorkOpus{},
+			wantObj: &tWorkOpus.WorkOpus{},
 		},
 		{
 			name: "work>opus invalid actuate",
 			args: args{
 				d:     xml.NewDecoder(bytes.NewReader([]byte(`<opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlinkactuate:="non"/>`))),
 				start: xml.StartElement{},
-				l:     &musicxml.WorkOpus{},
-				lr:    &musicxml.WorkOpusRaw{},
+				l:     &tWorkOpus.WorkOpus{},
+				lr:    &tWorkOpus.WorkOpusRaw{},
 			},
 			wantErr: true,
-			wantObj: &musicxml.WorkOpus{},
+			wantObj: &tWorkOpus.WorkOpus{},
 		},
 		{
 			name: "work>opus",
 			args: args{
 				d:     xml.NewDecoder(bytes.NewReader([]byte(`<opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="none"/>`))),
 				start: xml.StartElement{},
-				l:     &musicxml.WorkOpus{},
-				lr:    &musicxml.WorkOpusRaw{},
+				l:     &tWorkOpus.WorkOpus{},
+				lr:    &tWorkOpus.WorkOpusRaw{},
 			},
 			wantErr: false,
-			wantObj: &musicxml.WorkOpus{
+			wantObj: &tWorkOpus.WorkOpus{
 				XMLName: xml.Name{
 					Space: "",
 					Local: "opus",

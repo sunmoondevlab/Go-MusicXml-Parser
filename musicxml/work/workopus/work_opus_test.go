@@ -1,4 +1,4 @@
-package musicxml
+package workopus
 
 import (
 	"bytes"
@@ -30,10 +30,10 @@ func TestWorkOpus_UnmarshalXML(t *testing.T) {
 		fields  fields
 		args    args
 		wantErr bool
-		wantWo  WorkOpus
+		wantObj WorkOpus
 	}{
 		{
-			name: "work>opus",
+			name: "opus",
 			fields: fields{
 				XMLName: xml.Name{Space: "", Local: "opus"},
 				XLink:   "",
@@ -49,7 +49,7 @@ func TestWorkOpus_UnmarshalXML(t *testing.T) {
 				start: xml.StartElement{},
 			},
 			wantErr: false,
-			wantWo: WorkOpus{
+			wantObj: WorkOpus{
 				XMLName: xml.Name{
 					Space: "",
 					Local: "opus",
@@ -79,8 +79,8 @@ func TestWorkOpus_UnmarshalXML(t *testing.T) {
 			if err := wo.UnmarshalXML(tt.args.d, tt.args.start); (err != nil) != tt.wantErr {
 				t.Errorf("WorkOpus.UnmarshalXML() error = %v, wantErr %v", err, tt.wantErr)
 			}
-			if diff := cmp.Diff(wo, &tt.wantWo); diff != "" {
-				t.Errorf("WorkOpus.UnmarshalXML() value is mismatch (-wo +tt.wantWo):%s\n", diff)
+			if diff := cmp.Diff(wo, &tt.wantObj); diff != "" {
+				t.Errorf("WorkOpus.UnmarshalXML() value is mismatch (-wo +tt.wantObj):%s\n", diff)
 			}
 		})
 	}
