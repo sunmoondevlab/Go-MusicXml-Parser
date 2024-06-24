@@ -109,3 +109,8 @@ func (e *CopyRightsTypeEnum) Ordinal() string {
 func (e *CopyRightsTypeEnum) String() string {
 	return string(*e)
 }
+
+func (e *CopyRightsTypeEnum) StringPtr() *string {
+	s := string(*e)
+	return &s
+}

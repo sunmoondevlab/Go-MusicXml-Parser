@@ -87,3 +87,8 @@ func (e *XlinkActuateEnum) Ordinal() string {
 func (e *XlinkActuateEnum) String() string {
 	return string(*e)
 }
+
+func (e *XlinkActuateEnum) StringPtr() *string {
+	s := string(*e)
+	return &s
+}

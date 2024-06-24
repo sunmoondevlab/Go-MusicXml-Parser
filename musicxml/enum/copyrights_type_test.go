@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/sunmoondevlab/Go-MusicXml-Parser/testutil"
 )
 
 func TestToCopyRightsType(t *testing.T) {
@@ -145,8 +146,9 @@ func TestCopyRightsTypeEnum_Equals(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.Equals(tt.args.obj); got != tt.want {
-				t.Errorf("CopyRightsTypeEnum.Equals() = %v, want %v", got, tt.want)
+			got := tt.e.Equals(tt.args.obj)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("CopyRightsTypeEnum.Equals() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}
@@ -181,8 +183,9 @@ func TestCopyRightsTypeEnum_In(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.In(tt.args.objs...); got != tt.want {
-				t.Errorf("CopyRightsTypeEnum.In() = %v, want %v", got, tt.want)
+			got := tt.e.In(tt.args.objs...)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("CopyRightsTypeEnum.In() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}
@@ -202,8 +205,9 @@ func TestCopyRightsTypeEnum_Ordinal(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.Ordinal(); got != tt.want {
-				t.Errorf("CopyRightsTypeEnum.Ordinal() = %v, want %v", got, tt.want)
+			got := tt.e.Ordinal()
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("CopyRightsTypeEnum.Ordinal() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}
@@ -223,8 +227,31 @@ func TestCopyRightsTypeEnum_String(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.String(); got != tt.want {
-				t.Errorf("CopyRightsTypeEnum.String() = %v, want %v", got, tt.want)
+			got := tt.e.String()
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("CopyRightsTypeEnum.String() value is mismatch (-got +tt.want):%s\n", diff)
+			}
+		})
+	}
+}
+
+func TestCopyRightsTypeEnum_StringPtr(t *testing.T) {
+	tests := []struct {
+		name string
+		e    *CopyRightsTypeEnum
+		want *string
+	}{
+		{
+			name: "music",
+			e:    &CopyRightsType.Music,
+			want: testutil.ToStringPtr("music"),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.e.StringPtr()
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("CopyRightsTypeEnum.StringPtr() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}
