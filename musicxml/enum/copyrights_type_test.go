@@ -18,14 +18,6 @@ func TestToCopyRightsType(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "",
-			args: args{
-				t: "",
-			},
-			want:    &CopyRightsType.All,
-			wantErr: false,
-		},
-		{
 			name: "music",
 			args: args{
 				t: "music",
@@ -97,7 +89,6 @@ func TestAllCopyRightsTypeEnumValues(t *testing.T) {
 		{
 			name: "",
 			want: []CopyRightsTypeEnum{
-				CopyRightsType.All,
 				CopyRightsType.Music,
 				CopyRightsType.Arrangement,
 				CopyRightsType.Words,
@@ -199,7 +190,7 @@ func TestCopyRightsTypeEnum_Ordinal(t *testing.T) {
 	}{
 		{
 			name: "ord",
-			e:    &CopyRightsType.All,
+			e:    &CopyRightsType.Music,
 			want: "0",
 		},
 	}

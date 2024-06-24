@@ -99,7 +99,7 @@ func TestWorkOpus_UnmarshalXML(t *testing.T) {
 
 func TestWorkOpus_MarshalXML(t *testing.T) {
 	type args struct {
-		wo *WorkOpus
+		woo *WorkOpus
 	}
 	tests := []struct {
 		name    string
@@ -110,7 +110,7 @@ func TestWorkOpus_MarshalXML(t *testing.T) {
 		{
 			name: "work>opus",
 			args: args{
-				wo: &WorkOpus{
+				woo: &WorkOpus{
 					XMLName: xml.Name{
 						Local: "opus",
 					},
@@ -128,7 +128,7 @@ func TestWorkOpus_MarshalXML(t *testing.T) {
 		{
 			name: "work>opus ommit empty",
 			args: args{
-				wo: &WorkOpus{
+				woo: &WorkOpus{
 					XMLName: xml.Name{
 						Local: "opus",
 					},
@@ -143,7 +143,7 @@ func TestWorkOpus_MarshalXML(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			b, err := xml.Marshal(tt.args.wo)
+			b, err := xml.MarshalIndent(tt.args.woo, "", "  ")
 			if (err != nil) != tt.wantErr {
 				t.Errorf("WorkOpus.MarshalXML() error = %v, wantErr %v", err, tt.wantErr)
 			}

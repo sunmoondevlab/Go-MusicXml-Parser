@@ -38,7 +38,7 @@ func TestWork_UnmarshalXML(t *testing.T) {
     <work-title>無題のスコア</work-title>
     <opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="none"/>
     </work>`))),
-				start: xml.StartElement{Name: xml.Name{Space: "", Local: "wor"}, Attr: []xml.Attr{}},
+				start: xml.StartElement{Name: xml.Name{Local: "wor"}, Attr: []xml.Attr{}},
 			},
 			wantErr: true,
 			wantObj: Work{},
@@ -190,7 +190,7 @@ func TestWork_UnmarshalXML(t *testing.T) {
 
 func TestWork_MarshalXML(t *testing.T) {
 	type args struct {
-		w *Work
+		wo *Work
 	}
 	tests := []struct {
 		name    string
@@ -201,7 +201,7 @@ func TestWork_MarshalXML(t *testing.T) {
 		{
 			name: "work",
 			args: args{
-				w: &Work{
+				wo: &Work{
 					XMLName: xml.Name{
 						Local: "work",
 					},
@@ -222,12 +222,16 @@ func TestWork_MarshalXML(t *testing.T) {
 				},
 			},
 			wantErr: false,
-			wantXml: `<work><work-title>無題のスコア</work-title><work-number>Work Number</work-number><opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="none"></opus></work>`,
+			wantXml: `<work>
+  <work-title>無題のスコア</work-title>
+  <work-number>Work Number</work-number>
+  <opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="none"></opus>
+</work>`,
 		},
 		{
 			name: "work ommit work-title",
 			args: args{
-				w: &Work{
+				wo: &Work{
 					XMLName: xml.Name{
 						Local: "work",
 					},
@@ -247,12 +251,15 @@ func TestWork_MarshalXML(t *testing.T) {
 				},
 			},
 			wantErr: false,
-			wantXml: `<work><work-number>Work Number</work-number><opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="none"></opus></work>`,
+			wantXml: `<work>
+  <work-number>Work Number</work-number>
+  <opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="none"></opus>
+</work>`,
 		},
 		{
 			name: "work omit work-number",
 			args: args{
-				w: &Work{
+				wo: &Work{
 					XMLName: xml.Name{
 						Local: "work",
 					},
@@ -272,12 +279,15 @@ func TestWork_MarshalXML(t *testing.T) {
 				},
 			},
 			wantErr: false,
-			wantXml: `<work><work-title>無題のスコア</work-title><opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="none"></opus></work>`,
+			wantXml: `<work>
+  <work-title>無題のスコア</work-title>
+  <opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="none"></opus>
+</work>`,
 		},
 		{
 			name: "work omit opus",
 			args: args{
-				w: &Work{
+				wo: &Work{
 					XMLName: xml.Name{
 						Local: "work",
 					},
@@ -286,12 +296,15 @@ func TestWork_MarshalXML(t *testing.T) {
 				},
 			},
 			wantErr: false,
-			wantXml: `<work><work-title>無題のスコア</work-title><work-number>Work Number</work-number></work>`,
+			wantXml: `<work>
+  <work-title>無題のスコア</work-title>
+  <work-number>Work Number</work-number>
+</work>`,
 		},
 		{
 			name: "work omit all children",
 			args: args{
-				w: &Work{
+				wo: &Work{
 					XMLName: xml.Name{
 						Local: "work",
 					},
@@ -303,7 +316,7 @@ func TestWork_MarshalXML(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			b, err := xml.Marshal(tt.args.w)
+			b, err := xml.MarshalIndent(tt.args.wo, "", "  ")
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Work.MarshalXML() error = %v, wantErr %v", err, tt.wantErr)
 			}

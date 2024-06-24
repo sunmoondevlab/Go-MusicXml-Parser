@@ -8,7 +8,6 @@ import (
 type CopyRightsTypeEnum string
 
 var CopyRightsType = struct {
-	All         CopyRightsTypeEnum
 	Music       CopyRightsTypeEnum
 	Arrangement CopyRightsTypeEnum
 	Words       CopyRightsTypeEnum
@@ -17,7 +16,6 @@ var CopyRightsType = struct {
 	Other       CopyRightsTypeEnum
 	opts        map[string]map[string]interface{}
 }{
-	All:         CopyRightsTypeEnum(""),
 	Music:       CopyRightsTypeEnum("music"),
 	Arrangement: CopyRightsTypeEnum("arrangement"),
 	Words:       CopyRightsTypeEnum("words"),
@@ -25,34 +23,29 @@ var CopyRightsType = struct {
 	Parody:      CopyRightsTypeEnum("parody"),
 	Other:       CopyRightsTypeEnum("other"),
 	opts: map[string]map[string]interface{}{
-		"": {
+		"music": {
 			"ordinal": "0",
 		},
-		"music": {
+		"arrangement": {
 			"ordinal": "1",
 		},
-		"arrangement": {
+		"words": {
 			"ordinal": "2",
 		},
-		"words": {
+		"translation": {
 			"ordinal": "3",
 		},
-		"translation": {
+		"parody": {
 			"ordinal": "4",
 		},
-		"parody": {
-			"ordinal": "5",
-		},
 		"other": {
-			"ordinal": "6",
+			"ordinal": "5",
 		},
 	},
 }
 
 func ToCopyRightsType(t string) (*CopyRightsTypeEnum, error) {
 	switch t {
-	case CopyRightsType.All.String():
-		return &CopyRightsType.All, nil
 	case CopyRightsType.Music.String():
 		return &CopyRightsType.Music, nil
 	case CopyRightsType.Arrangement.String():
@@ -70,7 +63,6 @@ func ToCopyRightsType(t string) (*CopyRightsTypeEnum, error) {
 
 func AllCopyRightsTypeEnumValues() []CopyRightsTypeEnum {
 	values := []CopyRightsTypeEnum{
-		CopyRightsType.All,
 		CopyRightsType.Music,
 		CopyRightsType.Arrangement,
 		CopyRightsType.Words,

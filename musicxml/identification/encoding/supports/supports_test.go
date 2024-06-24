@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/sunmoondevlab/Go-MusicXml-Parser/musicxml/enum"
+	"github.com/sunmoondevlab/Go-MusicXml-Parser/testutil"
 )
 
 func TestSupportsL_UnmarshalXML(t *testing.T) {
@@ -16,28 +17,28 @@ func TestSupportsL_UnmarshalXML(t *testing.T) {
 	}
 	tests := []struct {
 		name    string
-		sl      *SupportsL
+		sL      *SupportsL
 		args    args
 		wantErr bool
 		wantObj SupportsL
 	}{
 		{
 			name: "supports invalid decode",
-			sl:   &SupportsL{},
+			sL:   &SupportsL{},
 			args: args{
 				d: xml.NewDecoder(bytes.NewReader([]byte(`<supports element="accidental" type="yes"/>
 		      <supports element="beam" type="yes"/>
 		      <supports element="print" attribute="new-page" type="no"/>
 		      <supports element="print" attribute="new-system" type="no"/>
 		      <supports element="stem" type="yes"/>`))),
-				start: xml.StartElement{Name: xml.Name{Space: "", Local: "support"}, Attr: []xml.Attr{}},
+				start: xml.StartElement{Name: xml.Name{Local: "support"}, Attr: []xml.Attr{}},
 			},
 			wantErr: true,
 			wantObj: []Supports{},
 		},
 		{
 			name: "supports invalid type",
-			sl:   &SupportsL{},
+			sL:   &SupportsL{},
 			args: args{
 				d: xml.NewDecoder(bytes.NewReader([]byte(`<supports element="accidental" type="yes"/>
       <supports element="beam" type="yes"/>
@@ -50,29 +51,23 @@ func TestSupportsL_UnmarshalXML(t *testing.T) {
 			wantObj: []Supports{
 				{
 					XMLName: xml.Name{
-						Space: "",
 						Local: "supports",
 					},
-					Element:   "accidental",
-					Type:      enum.YesNo.Yes,
-					Attribute: "",
-					Value:     "",
+					Element: "accidental",
+					Type:    enum.YesNo.Yes,
 				},
 				{
 					XMLName: xml.Name{
-						Space: "",
 						Local: "supports",
 					},
-					Element:   "beam",
-					Type:      enum.YesNo.Yes,
-					Attribute: "",
-					Value:     "",
+					Element: "beam",
+					Type:    enum.YesNo.Yes,
 				},
 			},
 		},
 		{
 			name: "supports",
-			sl:   &SupportsL{},
+			sL:   &SupportsL{},
 			args: args{
 				d: xml.NewDecoder(bytes.NewReader([]byte(`<supports element="accidental" type="yes"/>
       <supports element="beam" type="yes"/>
@@ -86,74 +81,163 @@ func TestSupportsL_UnmarshalXML(t *testing.T) {
 			wantObj: []Supports{
 				{
 					XMLName: xml.Name{
-						Space: "",
 						Local: "supports",
 					},
-					Element:   "accidental",
-					Type:      enum.YesNo.Yes,
-					Attribute: "",
-					Value:     "",
+					Element: "accidental",
+					Type:    enum.YesNo.Yes,
 				},
 				{
 					XMLName: xml.Name{
-						Space: "",
 						Local: "supports",
 					},
-					Element:   "beam",
-					Type:      enum.YesNo.Yes,
-					Attribute: "",
-					Value:     "",
+					Element: "beam",
+					Type:    enum.YesNo.Yes,
 				},
 				{
 					XMLName: xml.Name{
-						Space: "",
 						Local: "supports",
 					},
 					Element:   "print",
 					Type:      enum.YesNo.No,
-					Attribute: "new-page",
-					Value:     "",
+					Attribute: testutil.ToStringPtr("new-page"),
 				},
 				{
 					XMLName: xml.Name{
-						Space: "",
 						Local: "supports",
 					},
 					Element:   "print",
 					Type:      enum.YesNo.No,
-					Attribute: "new-system",
-					Value:     "",
+					Attribute: testutil.ToStringPtr("new-system"),
 				},
 				{
 					XMLName: xml.Name{
-						Space: "",
 						Local: "supports",
 					},
-					Element:   "stem",
-					Type:      enum.YesNo.Yes,
-					Attribute: "",
-					Value:     "",
+					Element: "stem",
+					Type:    enum.YesNo.Yes,
 				},
 				{
 					XMLName: xml.Name{
-						Space: "",
 						Local: "supports",
 					},
 					Element:   "bend",
 					Type:      enum.YesNo.Yes,
-					Attribute: "fast-beat",
-					Value:     "100",
+					Attribute: testutil.ToStringPtr("fast-beat"),
+					Value:     testutil.ToStringPtr("100"),
 				},
 			},
+		},
+		{
+			name: "supports empty",
+			sL:   &SupportsL{},
+			args: args{
+				d:     xml.NewDecoder(bytes.NewReader([]byte(``))),
+				start: xml.StartElement{},
+			},
+			wantErr: false,
+			wantObj: []Supports{},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := tt.sl.UnmarshalXML(tt.args.d, tt.args.start); (err != nil) != tt.wantErr {
+			if err := tt.sL.UnmarshalXML(tt.args.d, tt.args.start); (err != nil) != tt.wantErr {
 				t.Errorf("SupportsL.UnmarshalXML() error = %v, wantErr %v", err, tt.wantErr)
 			}
-			if diff := cmp.Diff(*tt.sl, tt.wantObj); diff != "" {
-				t.Errorf("SupportsL.UnmarshalXML() value is mismatch (-*tt.sl +tt.wantObj):%s\n", diff)
+			if diff := cmp.Diff(*tt.sL, tt.wantObj); diff != "" {
+				t.Errorf("SupportsL.UnmarshalXML() value is mismatch (-*tt.sL +tt.wantObj):%s\n", diff)
+			}
+		})
+	}
+}
+
+func TestSupportsL_MarshalXML(t *testing.T) {
+	type args struct {
+		sL *SupportsL
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+		wantXml string
+	}{
+		{
+			name: "supports",
+			args: args{
+				sL: &SupportsL{
+					{
+						XMLName: xml.Name{
+							Local: "supports",
+						},
+						Element: "accidental",
+						Type:    enum.YesNo.Yes,
+					},
+					{
+						XMLName: xml.Name{
+							Local: "supports",
+						},
+						Element: "beam",
+						Type:    enum.YesNo.Yes,
+					},
+					{
+						XMLName: xml.Name{
+							Local: "supports",
+						},
+						Element:   "print",
+						Type:      enum.YesNo.No,
+						Attribute: testutil.ToStringPtr("new-page"),
+					},
+					{
+						XMLName: xml.Name{
+							Local: "supports",
+						},
+						Element:   "print",
+						Type:      enum.YesNo.No,
+						Attribute: testutil.ToStringPtr("new-system"),
+					},
+					{
+						XMLName: xml.Name{
+							Local: "supports",
+						},
+						Element: "stem",
+						Type:    enum.YesNo.Yes,
+					},
+					{
+						XMLName: xml.Name{
+							Local: "supports",
+						},
+						Element:   "bend",
+						Type:      enum.YesNo.Yes,
+						Attribute: testutil.ToStringPtr("fast-beat"),
+						Value:     testutil.ToStringPtr("100"),
+					},
+				},
+			},
+			wantErr: false,
+			wantXml: `<supports element="accidental" type="yes"></supports>
+<supports element="beam" type="yes"></supports>
+<supports element="print" type="no" attribute="new-page"></supports>
+<supports element="print" type="no" attribute="new-system"></supports>
+<supports element="stem" type="yes"></supports>
+<supports element="bend" type="yes" attribute="fast-beat" value="100"></supports>`,
+		},
+		{
+			name: "supports empty",
+			args: args{
+				sL: &SupportsL{},
+			},
+			wantErr: false,
+			wantXml: ``,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			b, err := xml.MarshalIndent(tt.args.sL, "", "  ")
+			if (err != nil) != tt.wantErr {
+				t.Errorf("SupportsL.MarshalXML() error = %v, wantErr %v", err, tt.wantErr)
+			}
+			ox := string(b)
+			if diff := cmp.Diff(ox, tt.wantXml); diff != "" {
+				t.Errorf("SupportsL.MarshalXML() value is mismatch (-ox +tt.wantXml):%s\n", diff)
 			}
 		})
 	}

@@ -11,22 +11,24 @@ import (
 type EncoderL []Encoder
 type Encoder struct {
 	XMLName        xml.Name `xml:"encoder"`
-	Type           string   `xml:"type,attr"`
-	CopyRightsType enum.CopyRightsTypeEnum
+	Type           *string  `xml:"type,attr,omitempty"`
+	CopyRightsType *enum.CopyRightsTypeEnum
 	Encoder        string `xml:",chardata"`
 }
 
-func (el *EncoderL) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (eL *EncoderL) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	startP := &start
 	if reflect.DeepEqual(start, xml.StartElement{}) {
 		startP = nil
 	}
 	for {
-		eer := &struct {
+		type eerT struct {
 			XMLName xml.Name `xml:"encoder"`
-			Type    string   `xml:"type,attr"`
+			Type    *string  `xml:"type,attr,omitempty"`
 			Encoder string   `xml:",chardata"`
-		}{}
+		}
+
+		eer := &eerT{}
 		err := d.DecodeElement(eer, startP)
 		if err == io.EOF {
 			break
@@ -34,15 +36,41 @@ func (el *EncoderL) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 		if err != nil {
 			return err
 		}
-		crt, _ := enum.ToCopyRightsType(eer.Type)
+		var crt *enum.CopyRightsTypeEnum
+		if eer.Type != nil {
+			crt, _ = enum.ToCopyRightsType(*eer.Type)
+		}
 		ee := Encoder{
 			XMLName:        eer.XMLName,
 			Type:           eer.Type,
-			CopyRightsType: *crt,
+			CopyRightsType: crt,
 			Encoder:        eer.Encoder,
 		}
-		(*el) = append(*el, ee)
+		(*eL) = append(*eL, ee)
 	}
 
 	return nil
+}
+
+func (eL *EncoderL) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+
+	type eerT struct {
+		XMLName xml.Name `xml:"encoder"`
+		Type    *string  `xml:"type,attr,omitempty"`
+		Encoder string   `xml:",chardata"`
+	}
+	type eerL []eerT
+	eerl := eerL{}
+
+	for _, ee := range *eL {
+		eer := eerT{
+			XMLName: ee.XMLName,
+			Type:    ee.Type,
+			Encoder: ee.Encoder,
+		}
+		eerl = append(eerl, eer)
+		start.Name = ee.XMLName
+	}
+
+	return e.EncodeElement(eerl, start)
 }

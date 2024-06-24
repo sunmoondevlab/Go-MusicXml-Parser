@@ -15,28 +15,31 @@ type CreatorElement struct {
 }
 
 type Creator struct {
-	Composer   CreatorElement
-	Arranger   CreatorElement
-	Lyricist   CreatorElement
-	Poet       CreatorElement
-	Translator CreatorElement
+	XMLName    xml.Name `xml:"creator"`
+	Composer   *CreatorElement
+	Arranger   *CreatorElement
+	Lyricist   *CreatorElement
+	Poet       *CreatorElement
+	Translator *CreatorElement
 }
 
-func (c *Creator) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (cO *Creator) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	startP := &start
 	if reflect.DeepEqual(start, xml.StartElement{}) {
 		startP = nil
 	}
 	for {
-		cer := &struct {
+		type cerT struct {
 			XMLName xml.Name `xml:"creator"`
 			Type    string   `xml:"type,attr"`
 			Creator string   `xml:",chardata"`
-		}{}
+		}
+		cer := &cerT{}
 		err := d.DecodeElement(cer, startP)
 		if err == io.EOF {
 			break
 		}
+		cO.XMLName = cer.XMLName
 		if err != nil {
 			return err
 		}
@@ -44,24 +47,64 @@ func (c *Creator) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 		if err != nil {
 			return err
 		}
-		ce := CreatorElement{
+		ce := &CreatorElement{
 			XMLName: cer.XMLName,
 			Type:    *cet,
 			Creator: cer.Creator,
 		}
 		switch *cet {
 		case enum.CreatorType.Composer:
-			c.Composer = ce
+			cO.Composer = ce
 		case enum.CreatorType.Arranger:
-			c.Arranger = ce
+			cO.Arranger = ce
 		case enum.CreatorType.Lyricist:
-			c.Lyricist = ce
+			cO.Lyricist = ce
 		case enum.CreatorType.Poet:
-			c.Poet = ce
+			cO.Poet = ce
 		case enum.CreatorType.Translator:
-			c.Translator = ce
+			cO.Translator = ce
 		}
 	}
 
 	return nil
+}
+
+func (cO *Creator) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+
+	cl := []*CreatorElement{}
+
+	if cO.Composer != nil {
+		cl = append(cl, cO.Composer)
+	}
+	if cO.Arranger != nil {
+		cl = append(cl, cO.Arranger)
+	}
+	if cO.Lyricist != nil {
+		cl = append(cl, cO.Lyricist)
+	}
+	if cO.Poet != nil {
+		cl = append(cl, cO.Poet)
+	}
+	if cO.Translator != nil {
+		cl = append(cl, cO.Translator)
+	}
+
+	type cerT struct {
+		XMLName xml.Name `xml:"creator"`
+		Type    string   `xml:"type,attr"`
+		Creator string   `xml:",chardata"`
+	}
+	type cerL []cerT
+	cerl := cerL{}
+	for _, ce := range cl {
+		start.Name = ce.XMLName
+		cer := cerT{
+			XMLName: ce.XMLName,
+			Type:    ce.Type.String(),
+			Creator: ce.Creator,
+		}
+		cerl = append(cerl, cer)
+	}
+
+	return e.EncodeElement(cerl, start)
 }

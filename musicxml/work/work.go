@@ -19,12 +19,13 @@ func (wo *Work) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if reflect.DeepEqual(start, xml.StartElement{}) {
 		startP = nil
 	}
-	wr := &struct {
+	type wrT struct {
 		XMLName    xml.Name            `xml:"work"`
 		WorkTitle  *string             `xml:"work-title,omitempty"`
 		WorkNumber *string             `xml:"work-number,omitempty"`
 		WorkOpus   *tWorkOpus.WorkOpus `xml:"opus,omitempty"`
-	}{}
+	}
+	wr := &wrT{}
 
 	err := d.DecodeElement(wr, startP)
 	if err != nil {
@@ -44,12 +45,13 @@ func (wo *Work) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 	start.Name = wo.XMLName
 
-	wr := &struct {
+	type wrT struct {
 		XMLName    xml.Name            `xml:"work"`
 		WorkTitle  *string             `xml:"work-title,omitempty"`
 		WorkNumber *string             `xml:"work-number,omitempty"`
 		WorkOpus   *tWorkOpus.WorkOpus `xml:"opus,omitempty"`
-	}{
+	}
+	wr := &wrT{
 		XMLName:    wo.XMLName,
 		WorkTitle:  wo.WorkTitle,
 		WorkNumber: wo.WorkNumber,
