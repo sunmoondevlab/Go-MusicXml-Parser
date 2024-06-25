@@ -71,3 +71,8 @@ func (e *YesNoEnum) Ordinal() string {
 func (e *YesNoEnum) String() string {
 	return string(*e)
 }
+
+func (e *YesNoEnum) StringPtr() *string {
+	s := string(*e)
+	return &s
+}

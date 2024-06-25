@@ -12,35 +12,36 @@ import (
 )
 
 type Identification struct {
-	XMLName       xml.Name                     `xml:"identification"`
-	Creator       tCreator.Creator             `xml:"creator"`
-	Rights        tRights.RightsL              `xml:"rights"`
-	Encoding      tEncoding.Encoding           `xml:"encoding"`
-	Source        string                       `xml:"source"`
-	Relation      tRelation.RelationL          `xml:"relation"`
-	Miscellaneous tMiscellaneous.Miscellaneous `xml:"miscellaneous"`
+	XMLName       xml.Name                      `xml:"identification"`
+	Creator       *tCreator.Creator             `xml:"creator,omitempty"`
+	Rights        *tRights.RightsL              `xml:"rights,omitempty"`
+	Encoding      *tEncoding.Encoding           `xml:"encoding,omitempty"`
+	Source        *string                       `xml:"source,omitempty"`
+	Relation      *tRelation.RelationL          `xml:"relation,omitempty"`
+	Miscellaneous *tMiscellaneous.Miscellaneous `xml:"miscellaneous,omitempty"`
 }
 
-func (i *Identification) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (iO *Identification) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	startP := &start
 	if reflect.DeepEqual(start, xml.StartElement{}) {
 		startP = nil
 	}
-	ir := &struct {
-		XMLName       xml.Name                     `xml:"identification"`
-		Creator       tCreator.Creator             `xml:"creator"`
-		Rights        tRights.RightsL              `xml:"rights"`
-		Encoding      tEncoding.Encoding           `xml:"encoding"`
-		Source        string                       `xml:"source"`
-		Relation      tRelation.RelationL          `xml:"relation"`
-		Miscellaneous tMiscellaneous.Miscellaneous `xml:"miscellaneous"`
-	}{}
+	type irT struct {
+		XMLName       xml.Name                      `xml:"identification"`
+		Creator       *tCreator.Creator             `xml:"creator,omitempty"`
+		Rights        *tRights.RightsL              `xml:"rights,omitempty"`
+		Encoding      *tEncoding.Encoding           `xml:"encoding,omitempty"`
+		Source        *string                       `xml:"source,omitempty"`
+		Relation      *tRelation.RelationL          `xml:"relation,omitempty"`
+		Miscellaneous *tMiscellaneous.Miscellaneous `xml:"miscellaneous,omitempty"`
+	}
+	ir := &irT{}
 	err := d.DecodeElement(ir, startP)
 	if err != nil {
 		return err
 	}
 
-	*i = Identification{
+	*iO = Identification{
 		XMLName:       ir.XMLName,
 		Creator:       ir.Creator,
 		Rights:        ir.Rights,
@@ -51,4 +52,22 @@ func (i *Identification) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}
 
 	return nil
+}
+
+func (iO *Identification) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+
+	type irT struct {
+		XMLName       xml.Name                      `xml:"identification"`
+		Creator       *tCreator.Creator             `xml:"creator,omitempty"`
+		Rights        *tRights.RightsL              `xml:"rights,omitempty"`
+		Encoding      *tEncoding.Encoding           `xml:"encoding,omitempty"`
+		Source        *string                       `xml:"source,omitempty"`
+		Relation      *tRelation.RelationL          `xml:"relation,omitempty"`
+		Miscellaneous *tMiscellaneous.Miscellaneous `xml:"miscellaneous,omitempty"`
+	}
+	ir := irT(*iO)
+
+	start.Name = iO.XMLName
+
+	return e.EncodeElement(ir, start)
 }

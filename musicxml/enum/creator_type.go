@@ -95,3 +95,8 @@ func (e *CreatorTypeEnum) Ordinal() string {
 func (e *CreatorTypeEnum) String() string {
 	return string(*e)
 }
+
+func (e *CreatorTypeEnum) StringPtr() *string {
+	s := string(*e)
+	return &s
+}

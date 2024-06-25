@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/sunmoondevlab/Go-MusicXml-Parser/testutil"
 )
 
 func TestToYesNo(t *testing.T) {
@@ -56,8 +57,8 @@ func TestToYesNo(t *testing.T) {
 				t.Errorf("ToYesNo() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if got != tt.want {
-				t.Errorf("ToYesNo() = %v, want %v", got, tt.want)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("ToYesNo() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}
@@ -112,8 +113,9 @@ func TestYesNoEnum_Equals(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.Equals(tt.args.obj); got != tt.want {
-				t.Errorf("YesNoEnum.Equals() = %v, want %v", got, tt.want)
+			got := tt.e.Equals(tt.args.obj)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("YesNoEnum.Equals() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}
@@ -148,8 +150,9 @@ func TestYesNoEnum_In(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.In(tt.args.objs...); got != tt.want {
-				t.Errorf("YesNoEnum.In() = %v, want %v", got, tt.want)
+			got := tt.e.In(tt.args.objs...)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("YesNoEnum.In() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}
@@ -169,8 +172,9 @@ func TestYesNoEnum_Ordinal(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.Ordinal(); got != tt.want {
-				t.Errorf("YesNoEnum.Ordinal() = %v, want %v", got, tt.want)
+			got := tt.e.Ordinal()
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("YesNoEnum.Ordinal() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}
@@ -190,8 +194,31 @@ func TestYesNoEnum_String(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.String(); got != tt.want {
-				t.Errorf("YesNoEnum.String() = %v, want %v", got, tt.want)
+			got := tt.e.String()
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("YesNoEnum.String() value is mismatch (-got +tt.want):%s\n", diff)
+			}
+		})
+	}
+}
+
+func TestYesNoEnum_StringPtr(t *testing.T) {
+	tests := []struct {
+		name string
+		e    *YesNoEnum
+		want *string
+	}{
+		{
+			name: "yes",
+			e:    &YesNo.Yes,
+			want: testutil.ToStringPtr("yes"),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.e.StringPtr()
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("YesNoEnum.StringPtr() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/sunmoondevlab/Go-MusicXml-Parser/testutil"
 )
 
 func TestToXlinkShow(t *testing.T) {
@@ -135,8 +136,9 @@ func TestXlinkShowEnum_Equals(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.Equals(tt.args.obj); got != tt.want {
-				t.Errorf("XlinkShowEnum.Equals() = %v, want %v", got, tt.want)
+			got := tt.e.Equals(tt.args.obj)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("XlinkShowEnum.Equals() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}
@@ -171,8 +173,9 @@ func TestXlinkShowEnum_In(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.In(tt.args.objs...); got != tt.want {
-				t.Errorf("XlinkShowEnum.In() = %v, want %v", got, tt.want)
+			got := tt.e.In(tt.args.objs...)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("XlinkShowEnum.In() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}
@@ -192,8 +195,9 @@ func TestXlinkShowEnum_Ordinal(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.Ordinal(); got != tt.want {
-				t.Errorf("XlinkShowEnum.Ordinal() = %v, want %v", got, tt.want)
+			got := tt.e.Ordinal()
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("XlinkShowEnum.String() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}
@@ -213,8 +217,31 @@ func TestXlinkShowEnum_String(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.e.String(); got != tt.want {
-				t.Errorf("XlinkShowEnum.String() = %v, want %v", got, tt.want)
+			got := tt.e.String()
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("XlinkShowEnum.String() value is mismatch (-got +tt.want):%s\n", diff)
+			}
+		})
+	}
+}
+
+func TestXlinkShowEnum_StringPtr(t *testing.T) {
+	tests := []struct {
+		name string
+		e    *XlinkShowEnum
+		want *string
+	}{
+		{
+			name: "new",
+			e:    &XlinkShow.New,
+			want: testutil.ToStringPtr("new"),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.e.StringPtr()
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("XlinkShowEnum.StringPtr() value is mismatch (-got +tt.want):%s\n", diff)
 			}
 		})
 	}

@@ -9,6 +9,7 @@ import (
 	"github.com/sunmoondevlab/Go-MusicXml-Parser/musicxml/attrgrp"
 	"github.com/sunmoondevlab/Go-MusicXml-Parser/musicxml/enum"
 	tWorkOpus "github.com/sunmoondevlab/Go-MusicXml-Parser/musicxml/work/workopus"
+	"github.com/sunmoondevlab/Go-MusicXml-Parser/testutil"
 )
 
 func TestUnmarshalLinkAttributes(t *testing.T) {
@@ -30,7 +31,6 @@ func TestUnmarshalLinkAttributes(t *testing.T) {
 				d: xml.NewDecoder(bytes.NewReader([]byte(`<opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simpl" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="none"/>`))),
 				start: xml.StartElement{
 					Name: xml.Name{
-						Space: "",
 						Local: "opp",
 					},
 					Attr: []xml.Attr{},
@@ -66,7 +66,7 @@ func TestUnmarshalLinkAttributes(t *testing.T) {
 		{
 			name: "work>opus invalid actuate",
 			args: args{
-				d:     xml.NewDecoder(bytes.NewReader([]byte(`<opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlinkactuate:="non"/>`))),
+				d:     xml.NewDecoder(bytes.NewReader([]byte(`<opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" xlink:type="simple" xlink:role="role" xlink:title="winterreise" xlink:show="new" xlink:actuate="non"/>`))),
 				start: xml.StartElement{},
 				l:     &tWorkOpus.WorkOpus{},
 				lr:    &tWorkOpus.WorkOpusRaw{},
@@ -85,16 +85,32 @@ func TestUnmarshalLinkAttributes(t *testing.T) {
 			wantErr: false,
 			wantObj: &tWorkOpus.WorkOpus{
 				XMLName: xml.Name{
-					Space: "",
 					Local: "opus",
 				},
 				XLink:   "http://www.w3.org/1999/xlink",
 				Href:    "opus/winterreise.musicxml",
-				Type:    enum.XlinkType.Simple,
-				Role:    "role",
-				Title:   "winterreise",
-				Show:    enum.XlinkShow.New,
-				Actuate: enum.XlinkActuate.None,
+				Type:    &enum.XlinkType.Simple,
+				Role:    testutil.ToStringPtr("role"),
+				Title:   testutil.ToStringPtr("winterreise"),
+				Show:    &enum.XlinkShow.New,
+				Actuate: &enum.XlinkActuate.None,
+			},
+		},
+		{
+			name: "work>opus omit optional",
+			args: args{
+				d:     xml.NewDecoder(bytes.NewReader([]byte(`<opus xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="opus/winterreise.musicxml" />`))),
+				start: xml.StartElement{},
+				l:     &tWorkOpus.WorkOpus{},
+				lr:    &tWorkOpus.WorkOpusRaw{},
+			},
+			wantErr: false,
+			wantObj: &tWorkOpus.WorkOpus{
+				XMLName: xml.Name{
+					Local: "opus",
+				},
+				XLink: "http://www.w3.org/1999/xlink",
+				Href:  "opus/winterreise.musicxml",
 			},
 		},
 	}
