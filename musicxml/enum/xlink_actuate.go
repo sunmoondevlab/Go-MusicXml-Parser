@@ -35,7 +35,7 @@ var XlinkActuate = struct {
 	},
 }
 
-func ToXlinkActuate(t string, en string) (*XlinkActuateEnum, error) {
+func ToXlinkActuate(t string) (*XlinkActuateEnum, error) {
 	switch t {
 	case XlinkActuate.OnRequest.String():
 		return &XlinkActuate.OnRequest, nil
@@ -46,7 +46,7 @@ func ToXlinkActuate(t string, en string) (*XlinkActuateEnum, error) {
 	case XlinkActuate.None.String():
 		return &XlinkActuate.None, nil
 	}
-	return nil, fmt.Errorf("invalid <%s/> attr. attr => xlink:actuate actuate=%s", en, t)
+	return nil, fmt.Errorf("can not convert to XlinkActuate. t=%s", t)
 }
 
 func AllXlinkActuateEnumValues() []XlinkActuateEnum {

@@ -9,8 +9,7 @@ import (
 
 func TestToXlinkActuate(t *testing.T) {
 	type args struct {
-		t  string
-		en string
+		t string
 	}
 	tests := []struct {
 		name    string
@@ -21,58 +20,48 @@ func TestToXlinkActuate(t *testing.T) {
 		{
 			name: "onRequest",
 			args: args{
-				t:  "onRequest",
-				en: "opus",
-			},
+				t: "onRequest"},
 			want:    &XlinkActuate.OnRequest,
 			wantErr: false,
 		},
 		{
 			name: "onLoad",
 			args: args{
-				t:  "onLoad",
-				en: "opus",
-			},
+				t: "onLoad"},
 			want:    &XlinkActuate.OnLoad,
 			wantErr: false,
 		},
 		{
 			name: "other",
 			args: args{
-				t:  "other",
-				en: "opus",
-			},
+				t: "other"},
 			want:    &XlinkActuate.Other,
 			wantErr: false,
 		},
 		{
 			name: "none",
 			args: args{
-				t:  "none",
-				en: "opus",
-			},
+				t: "none"},
 			want:    &XlinkActuate.None,
 			wantErr: false,
 		},
 		{
 			name: "invalid",
 			args: args{
-				t:  "t",
-				en: "opus",
-			},
+				t: "t"},
 			want:    nil,
 			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ToXlinkActuate(tt.args.t, tt.args.en)
+			got, err := ToXlinkActuate(tt.args.t)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ToXlinkActuate() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if got != tt.want {
-				t.Errorf("ToXlinkActuate() = %v, want %v", got, tt.want)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("ToXlinkActuate() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -85,14 +74,19 @@ func TestAllXlinkActuateEnumValues(t *testing.T) {
 	}{
 		{
 			name: "",
-			want: []XlinkActuateEnum{XlinkActuate.OnRequest, XlinkActuate.OnLoad, XlinkActuate.Other, XlinkActuate.None},
+			want: []XlinkActuateEnum{
+				XlinkActuate.OnRequest,
+				XlinkActuate.OnLoad,
+				XlinkActuate.Other,
+				XlinkActuate.None,
+			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := AllXlinkActuateEnumValues()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("AllXlinkActuateEnumValues() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("AllXlinkActuateEnumValues() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -129,7 +123,7 @@ func TestXlinkActuateEnum_Equals(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.Equals(tt.args.obj)
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkActuateEnum.Equals() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkActuateEnum.Equals() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -166,7 +160,7 @@ func TestXlinkActuateEnum_In(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.In(tt.args.objs...)
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkActuateEnum.In() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkActuateEnum.In() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -188,7 +182,7 @@ func TestXlinkActuateEnum_Ordinal(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.Ordinal()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkActuateEnum.Ordinal() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkActuateEnum.Ordinal() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -210,7 +204,7 @@ func TestXlinkActuateEnum_String(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.String()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkActuateEnum.String() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkActuateEnum.String() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -232,7 +226,7 @@ func TestXlinkActuateEnum_StringPtr(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.StringPtr()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkActuateEnum.StringPtr() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkActuateEnum.StringPtr() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
