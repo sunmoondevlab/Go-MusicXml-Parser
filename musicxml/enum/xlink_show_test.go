@@ -9,8 +9,7 @@ import (
 
 func TestToXlinkShow(t *testing.T) {
 	type args struct {
-		t  string
-		en string
+		t string
 	}
 	tests := []struct {
 		name    string
@@ -21,67 +20,55 @@ func TestToXlinkShow(t *testing.T) {
 		{
 			name: "new",
 			args: args{
-				t:  "new",
-				en: "opus",
-			},
+				t: "new"},
 			want:    &XlinkShow.New,
 			wantErr: false,
 		},
 		{
 			name: "replace",
 			args: args{
-				t:  "replace",
-				en: "opus",
-			},
+				t: "replace"},
 			want:    &XlinkShow.Replace,
 			wantErr: false,
 		},
 		{
 			name: "embed",
 			args: args{
-				t:  "embed",
-				en: "opus",
-			},
+				t: "embed"},
 			want:    &XlinkShow.Embed,
 			wantErr: false,
 		},
 		{
 			name: "other",
 			args: args{
-				t:  "other",
-				en: "opus",
-			},
+				t: "other"},
 			want:    &XlinkShow.Other,
 			wantErr: false,
 		},
 		{
 			name: "none",
 			args: args{
-				t:  "none",
-				en: "opus",
-			},
+				t: "none"},
 			want:    &XlinkShow.None,
 			wantErr: false,
 		},
 		{
 			name: "invalid",
 			args: args{
-				t:  "t",
-				en: "opus",
-			},
+				t: "t"},
 			want:    nil,
 			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ToXlinkShow(tt.args.t, tt.args.en)
+			got, err := ToXlinkShow(tt.args.t)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ToXlinkShow() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if got != tt.want {
-				t.Errorf("ToXlinkShow() = %v, want %v", got, tt.want)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("ToXlinkShow() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -94,14 +81,19 @@ func TestAllXlinkShowEnumValues(t *testing.T) {
 	}{
 		{
 			name: "",
-			want: []XlinkShowEnum{XlinkShow.New, XlinkShow.Replace, XlinkShow.Embed, XlinkShow.Other, XlinkShow.None},
+			want: []XlinkShowEnum{
+				XlinkShow.New,
+				XlinkShow.Replace,
+				XlinkShow.Embed,
+				XlinkShow.Other,
+				XlinkShow.None},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := AllXlinkShowEnumValues()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("AllXlinkShowEnumValues() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("AllXlinkShowEnumValues() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -138,7 +130,7 @@ func TestXlinkShowEnum_Equals(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.Equals(tt.args.obj)
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkShowEnum.Equals() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkShowEnum.Equals() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -175,7 +167,7 @@ func TestXlinkShowEnum_In(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.In(tt.args.objs...)
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkShowEnum.In() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkShowEnum.In() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -197,7 +189,7 @@ func TestXlinkShowEnum_Ordinal(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.Ordinal()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkShowEnum.String() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkShowEnum.String() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -219,7 +211,7 @@ func TestXlinkShowEnum_String(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.String()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkShowEnum.String() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkShowEnum.String() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -241,7 +233,7 @@ func TestXlinkShowEnum_StringPtr(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.StringPtr()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkShowEnum.StringPtr() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkShowEnum.StringPtr() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}

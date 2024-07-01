@@ -5,23 +5,23 @@ import (
 	"strconv"
 )
 
-type CopyRightsTypeEnum string
+type CopyrightsTypeEnum string
 
-var CopyRightsType = struct {
-	Music       CopyRightsTypeEnum
-	Arrangement CopyRightsTypeEnum
-	Words       CopyRightsTypeEnum
-	Translation CopyRightsTypeEnum
-	Parody      CopyRightsTypeEnum
-	Other       CopyRightsTypeEnum
+var CopyrightsType = struct {
+	Music       CopyrightsTypeEnum
+	Arrangement CopyrightsTypeEnum
+	Words       CopyrightsTypeEnum
+	Translation CopyrightsTypeEnum
+	Parody      CopyrightsTypeEnum
+	Other       CopyrightsTypeEnum
 	opts        map[string]map[string]interface{}
 }{
-	Music:       CopyRightsTypeEnum("music"),
-	Arrangement: CopyRightsTypeEnum("arrangement"),
-	Words:       CopyRightsTypeEnum("words"),
-	Translation: CopyRightsTypeEnum("translation"),
-	Parody:      CopyRightsTypeEnum("parody"),
-	Other:       CopyRightsTypeEnum("other"),
+	Music:       CopyrightsTypeEnum("music"),
+	Arrangement: CopyrightsTypeEnum("arrangement"),
+	Words:       CopyrightsTypeEnum("words"),
+	Translation: CopyrightsTypeEnum("translation"),
+	Parody:      CopyrightsTypeEnum("parody"),
+	Other:       CopyrightsTypeEnum("other"),
 	opts: map[string]map[string]interface{}{
 		"music": {
 			"ordinal": "0",
@@ -44,31 +44,31 @@ var CopyRightsType = struct {
 	},
 }
 
-func ToCopyRightsType(t string) (*CopyRightsTypeEnum, error) {
+func ToCopyrightsType(t string) (*CopyrightsTypeEnum, error) {
 	switch t {
-	case CopyRightsType.Music.String():
-		return &CopyRightsType.Music, nil
-	case CopyRightsType.Arrangement.String():
-		return &CopyRightsType.Arrangement, nil
-	case CopyRightsType.Words.String():
-		return &CopyRightsType.Words, nil
-	case CopyRightsType.Translation.String():
-		return &CopyRightsType.Translation, nil
-	case CopyRightsType.Parody.String():
-		return &CopyRightsType.Parody, nil
+	case CopyrightsType.Music.String():
+		return &CopyrightsType.Music, nil
+	case CopyrightsType.Arrangement.String():
+		return &CopyrightsType.Arrangement, nil
+	case CopyrightsType.Words.String():
+		return &CopyrightsType.Words, nil
+	case CopyrightsType.Translation.String():
+		return &CopyrightsType.Translation, nil
+	case CopyrightsType.Parody.String():
+		return &CopyrightsType.Parody, nil
 	default:
-		return &CopyRightsType.Other, nil
+		return &CopyrightsType.Other, nil
 	}
 }
 
-func AllCopyRightsTypeEnumValues() []CopyRightsTypeEnum {
-	values := []CopyRightsTypeEnum{
-		CopyRightsType.Music,
-		CopyRightsType.Arrangement,
-		CopyRightsType.Words,
-		CopyRightsType.Translation,
-		CopyRightsType.Parody,
-		CopyRightsType.Other,
+func AllCopyrightsTypeEnumValues() []CopyrightsTypeEnum {
+	values := []CopyrightsTypeEnum{
+		CopyrightsType.Music,
+		CopyrightsType.Arrangement,
+		CopyrightsType.Words,
+		CopyrightsType.Translation,
+		CopyrightsType.Parody,
+		CopyrightsType.Other,
 	}
 
 	sort.Slice(values, func(i, j int) bool {
@@ -80,11 +80,11 @@ func AllCopyRightsTypeEnumValues() []CopyRightsTypeEnum {
 	return values
 }
 
-func (e *CopyRightsTypeEnum) Equals(obj CopyRightsTypeEnum) bool {
+func (e *CopyrightsTypeEnum) Equals(obj CopyrightsTypeEnum) bool {
 	return *e == obj
 }
 
-func (e *CopyRightsTypeEnum) In(objs ...CopyRightsTypeEnum) bool {
+func (e *CopyrightsTypeEnum) In(objs ...CopyrightsTypeEnum) bool {
 	for _, obj := range objs {
 		if e.Equals(obj) {
 			return true
@@ -94,15 +94,15 @@ func (e *CopyRightsTypeEnum) In(objs ...CopyRightsTypeEnum) bool {
 	return false
 }
 
-func (e *CopyRightsTypeEnum) Ordinal() string {
-	return CopyRightsType.opts[e.String()]["ordinal"].(string)
+func (e *CopyrightsTypeEnum) Ordinal() string {
+	return CopyrightsType.opts[e.String()]["ordinal"].(string)
 }
 
-func (e *CopyRightsTypeEnum) String() string {
+func (e *CopyrightsTypeEnum) String() string {
 	return string(*e)
 }
 
-func (e *CopyRightsTypeEnum) StringPtr() *string {
+func (e *CopyrightsTypeEnum) StringPtr() *string {
 	s := string(*e)
 	return &s
 }

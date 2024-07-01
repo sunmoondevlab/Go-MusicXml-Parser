@@ -7,14 +7,14 @@ import (
 	"github.com/sunmoondevlab/Go-MusicXml-Parser/testutil"
 )
 
-func TestToCopyRightsType(t *testing.T) {
+func TestToCopyrightsType(t *testing.T) {
 	type args struct {
 		t string
 	}
 	tests := []struct {
 		name    string
 		args    args
-		want    *CopyRightsTypeEnum
+		want    *CopyrightsTypeEnum
 		wantErr bool
 	}{
 		{
@@ -22,7 +22,7 @@ func TestToCopyRightsType(t *testing.T) {
 			args: args{
 				t: "music",
 			},
-			want:    &CopyRightsType.Music,
+			want:    &CopyrightsType.Music,
 			wantErr: false,
 		},
 		{
@@ -30,7 +30,7 @@ func TestToCopyRightsType(t *testing.T) {
 			args: args{
 				t: "words",
 			},
-			want:    &CopyRightsType.Words,
+			want:    &CopyrightsType.Words,
 			wantErr: false,
 		},
 
@@ -39,7 +39,7 @@ func TestToCopyRightsType(t *testing.T) {
 			args: args{
 				t: "arrangement",
 			},
-			want:    &CopyRightsType.Arrangement,
+			want:    &CopyrightsType.Arrangement,
 			wantErr: false,
 		},
 		{
@@ -47,7 +47,7 @@ func TestToCopyRightsType(t *testing.T) {
 			args: args{
 				t: "translation",
 			},
-			want:    &CopyRightsType.Translation,
+			want:    &CopyrightsType.Translation,
 			wantErr: false,
 		},
 		{
@@ -55,7 +55,7 @@ func TestToCopyRightsType(t *testing.T) {
 			args: args{
 				t: "parody",
 			},
-			want:    &CopyRightsType.Parody,
+			want:    &CopyrightsType.Parody,
 			wantErr: false,
 		},
 		{
@@ -63,74 +63,74 @@ func TestToCopyRightsType(t *testing.T) {
 			args: args{
 				t: "song",
 			},
-			want:    &CopyRightsType.Other,
+			want:    &CopyrightsType.Other,
 			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ToCopyRightsType(tt.args.t)
+			got, err := ToCopyrightsType(tt.args.t)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("ToCopyRightsType() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("ToCopyrightsType() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if got != tt.want {
-				t.Errorf("ToCopyRightsType() = %v, want %v", got, tt.want)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("ToCopyrightsType() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
 }
 
-func TestAllCopyRightsTypeEnumValues(t *testing.T) {
+func TestAllCopyrightsTypeEnumValues(t *testing.T) {
 	tests := []struct {
 		name string
-		want []CopyRightsTypeEnum
+		want []CopyrightsTypeEnum
 	}{
 		{
 			name: "",
-			want: []CopyRightsTypeEnum{
-				CopyRightsType.Music,
-				CopyRightsType.Arrangement,
-				CopyRightsType.Words,
-				CopyRightsType.Translation,
-				CopyRightsType.Parody,
-				CopyRightsType.Other,
+			want: []CopyrightsTypeEnum{
+				CopyrightsType.Music,
+				CopyrightsType.Arrangement,
+				CopyrightsType.Words,
+				CopyrightsType.Translation,
+				CopyrightsType.Parody,
+				CopyrightsType.Other,
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := AllCopyRightsTypeEnumValues()
+			got := AllCopyrightsTypeEnumValues()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("AllCopyRightsTypeEnumValues() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("AllCopyrightsTypeEnumValues() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
 }
 
-func TestCopyRightsTypeEnum_Equals(t *testing.T) {
+func TestCopyrightsTypeEnum_Equals(t *testing.T) {
 	type args struct {
-		obj CopyRightsTypeEnum
+		obj CopyrightsTypeEnum
 	}
 	tests := []struct {
 		name string
-		e    *CopyRightsTypeEnum
+		e    *CopyrightsTypeEnum
 		args args
 		want bool
 	}{
 		{
 			name: "ne",
-			e:    &CopyRightsType.Music,
+			e:    &CopyrightsType.Music,
 			args: args{
-				obj: CopyRightsType.Words,
+				obj: CopyrightsType.Words,
 			},
 			want: false,
 		},
 		{
 			name: "eq",
-			e:    &CopyRightsType.Music,
+			e:    &CopyrightsType.Music,
 			args: args{
-				obj: CopyRightsType.Music,
+				obj: CopyrightsType.Music,
 			},
 			want: true,
 		},
@@ -139,35 +139,35 @@ func TestCopyRightsTypeEnum_Equals(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.Equals(tt.args.obj)
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("CopyRightsTypeEnum.Equals() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("CopyrightsTypeEnum.Equals() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
 }
 
-func TestCopyRightsTypeEnum_In(t *testing.T) {
+func TestCopyrightsTypeEnum_In(t *testing.T) {
 	type args struct {
-		objs []CopyRightsTypeEnum
+		objs []CopyrightsTypeEnum
 	}
 	tests := []struct {
 		name string
-		e    *CopyRightsTypeEnum
+		e    *CopyrightsTypeEnum
 		args args
 		want bool
 	}{
 		{
 			name: "ni",
-			e:    &CopyRightsType.Music,
+			e:    &CopyrightsType.Music,
 			args: args{
-				objs: []CopyRightsTypeEnum{CopyRightsType.Arrangement, CopyRightsType.Translation},
+				objs: []CopyrightsTypeEnum{CopyrightsType.Arrangement, CopyrightsType.Translation},
 			},
 			want: false,
 		},
 		{
 			name: "in",
-			e:    &CopyRightsType.Music,
+			e:    &CopyrightsType.Music,
 			args: args{
-				objs: []CopyRightsTypeEnum{CopyRightsType.Music, CopyRightsType.Arrangement, CopyRightsType.Translation},
+				objs: []CopyrightsTypeEnum{CopyrightsType.Music, CopyrightsType.Arrangement, CopyrightsType.Translation},
 			},
 			want: true,
 		},
@@ -176,21 +176,21 @@ func TestCopyRightsTypeEnum_In(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.In(tt.args.objs...)
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("CopyRightsTypeEnum.In() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("CopyrightsTypeEnum.In() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
 }
 
-func TestCopyRightsTypeEnum_Ordinal(t *testing.T) {
+func TestCopyrightsTypeEnum_Ordinal(t *testing.T) {
 	tests := []struct {
 		name string
-		e    *CopyRightsTypeEnum
+		e    *CopyrightsTypeEnum
 		want string
 	}{
 		{
 			name: "ord",
-			e:    &CopyRightsType.Music,
+			e:    &CopyrightsType.Music,
 			want: "0",
 		},
 	}
@@ -198,21 +198,21 @@ func TestCopyRightsTypeEnum_Ordinal(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.Ordinal()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("CopyRightsTypeEnum.Ordinal() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("CopyrightsTypeEnum.Ordinal() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
 }
 
-func TestCopyRightsTypeEnum_String(t *testing.T) {
+func TestCopyrightsTypeEnum_String(t *testing.T) {
 	tests := []struct {
 		name string
-		e    *CopyRightsTypeEnum
+		e    *CopyrightsTypeEnum
 		want string
 	}{
 		{
 			name: "music",
-			e:    &CopyRightsType.Music,
+			e:    &CopyrightsType.Music,
 			want: "music",
 		},
 	}
@@ -220,21 +220,21 @@ func TestCopyRightsTypeEnum_String(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.String()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("CopyRightsTypeEnum.String() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("CopyrightsTypeEnum.String() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
 }
 
-func TestCopyRightsTypeEnum_StringPtr(t *testing.T) {
+func TestCopyrightsTypeEnum_StringPtr(t *testing.T) {
 	tests := []struct {
 		name string
-		e    *CopyRightsTypeEnum
+		e    *CopyrightsTypeEnum
 		want *string
 	}{
 		{
 			name: "music",
-			e:    &CopyRightsType.Music,
+			e:    &CopyrightsType.Music,
 			want: testutil.ToStringPtr("music"),
 		},
 	}
@@ -242,7 +242,7 @@ func TestCopyRightsTypeEnum_StringPtr(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.StringPtr()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("CopyRightsTypeEnum.StringPtr() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("CopyrightsTypeEnum.StringPtr() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}

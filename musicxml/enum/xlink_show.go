@@ -40,7 +40,7 @@ var XlinkShow = struct {
 	},
 }
 
-func ToXlinkShow(t string, en string) (*XlinkShowEnum, error) {
+func ToXlinkShow(t string) (*XlinkShowEnum, error) {
 	switch t {
 	case XlinkShow.New.String():
 		return &XlinkShow.New, nil
@@ -53,7 +53,7 @@ func ToXlinkShow(t string, en string) (*XlinkShowEnum, error) {
 	case XlinkShow.None.String():
 		return &XlinkShow.None, nil
 	}
-	return nil, fmt.Errorf("invalid <%s/> attr. attr => xlink:show show=%s", en, t)
+	return nil, fmt.Errorf("can not convert to XlinkShow. t=%s", t)
 }
 
 func AllXlinkShowEnumValues() []XlinkShowEnum {

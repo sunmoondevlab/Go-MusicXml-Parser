@@ -18,12 +18,12 @@ var XlinkType = struct {
 	},
 }
 
-func ToXlinkType(t string, en string) (*XlinkTypeEnum, error) {
+func ToXlinkType(t string) (*XlinkTypeEnum, error) {
 	switch t {
 	case XlinkType.Simple.String():
 		return &XlinkType.Simple, nil
 	}
-	return nil, fmt.Errorf("invalid <%s/> attr. attr => xlink:type type=%s", en, t)
+	return nil, fmt.Errorf("can not convert to XlinkType. t=%s", t)
 }
 
 func AllXlinkTypeEnumValues() []XlinkTypeEnum {

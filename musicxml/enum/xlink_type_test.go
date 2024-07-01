@@ -9,8 +9,7 @@ import (
 
 func TestToXlinkType(t *testing.T) {
 	type args struct {
-		t  string
-		en string
+		t string
 	}
 	tests := []struct {
 		name    string
@@ -21,8 +20,7 @@ func TestToXlinkType(t *testing.T) {
 		{
 			name: "simple",
 			args: args{
-				t:  "simple",
-				en: "opus",
+				t: "simple",
 			},
 			want:    &XlinkType.Simple,
 			wantErr: false,
@@ -30,8 +28,7 @@ func TestToXlinkType(t *testing.T) {
 		{
 			name: "invalid",
 			args: args{
-				t:  "t",
-				en: "opus",
+				t: "t",
 			},
 			want:    nil,
 			wantErr: true,
@@ -39,13 +36,13 @@ func TestToXlinkType(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ToXlinkType(tt.args.t, tt.args.en)
+			got, err := ToXlinkType(tt.args.t)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ToXlinkType() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if got != tt.want {
-				t.Errorf("ToXlinkType() = %v, want %v", got, tt.want)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("ToXlinkType() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -58,14 +55,16 @@ func TestAllXlinkTypeEnumValues(t *testing.T) {
 	}{
 		{
 			name: "",
-			want: []XlinkTypeEnum{XlinkType.Simple},
+			want: []XlinkTypeEnum{
+				XlinkType.Simple,
+			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := AllXlinkTypeEnumValues()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("AllXlinkTypeEnumValues() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("AllXlinkTypeEnumValues() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -102,7 +101,7 @@ func TestXlinkTypeEnum_Equals(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.Equals(tt.args.obj)
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkTypeEnum.Equals() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkTypeEnum.Equals() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -139,7 +138,7 @@ func TestXlinkTypeEnum_In(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.In(tt.args.objs...)
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkTypeEnum.In() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkTypeEnum.In() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -161,7 +160,7 @@ func TestXlinkTypeEnum_Ordinal(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.Ordinal()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkTypeEnum.Ordinal() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkTypeEnum.Ordinal() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -183,7 +182,7 @@ func TestXlinkTypeEnum_String(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.String()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkTypeEnum.String() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkTypeEnum.String() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -205,7 +204,7 @@ func TestXlinkTypeEnum_StringPtr(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.StringPtr()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("XlinkTypeEnum.StringPtr() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("XlinkTypeEnum.StringPtr() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}

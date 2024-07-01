@@ -5,11 +5,11 @@ package musicxml
 import (
 	"encoding/xml"
 
-	"github.com/sunmoondevlab/Go-MusicXml-Parser/musicxml"
+	"github.com/sunmoondevlab/Go-MusicXml-Parser/musicxml/element"
 )
 
-func ParseMusicXml(mx string) musicxml.ScorePartwise{
-	spw := musicxml.ScorePartwise{}
+func ParseMusicXml(mx string) element.ScorePartwise{
+	spw := element.ScorePartwise{}
 	_ = xml.Unmarshal([]byte(mx), &spw)
 	return spw
 }

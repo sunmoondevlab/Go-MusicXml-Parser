@@ -73,8 +73,8 @@ func TestToCreatorType(t *testing.T) {
 				t.Errorf("ToCreatorType() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if got != tt.want {
-				t.Errorf("ToCreatorType() = %v, want %v", got, tt.want)
+			if diff := cmp.Diff(got, tt.want); diff != "" {
+				t.Errorf("ToCreatorType() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -94,7 +94,7 @@ func TestAllCreatorTypeEnumValues(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := AllCreatorTypeEnumValues()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("AllCreatorTypeEnumValues() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("AllCreatorTypeEnumValues() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -131,7 +131,7 @@ func TestCreatorTypeEnum_Equals(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.Equals(tt.args.obj)
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("CreatorTypeEnum.Equals() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("CreatorTypeEnum.Equals() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -168,7 +168,7 @@ func TestCreatorTypeEnum_In(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.In(tt.args.objs...)
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("CreatorTypeEnum.In() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("CreatorTypeEnum.In() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -190,7 +190,7 @@ func TestCreatorTypeEnum_Ordinal(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.Ordinal()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("CreatorTypeEnum.Ordinal() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("CreatorTypeEnum.Ordinal() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -212,7 +212,7 @@ func TestCreatorTypeEnum_String(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.String()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("CreatorTypeEnum.String() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("CreatorTypeEnum.String() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}
@@ -234,7 +234,7 @@ func TestCreatorTypeEnum_StringPtr(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.e.StringPtr()
 			if diff := cmp.Diff(got, tt.want); diff != "" {
-				t.Errorf("CreatorTypeEnum.StringPtr() value is mismatch (-got +tt.want):%s\n", diff)
+				t.Errorf("CreatorTypeEnum.StringPtr() value is mismatch (-got, +want):%s\n", diff)
 			}
 		})
 	}

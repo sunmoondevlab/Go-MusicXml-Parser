@@ -53,7 +53,7 @@ func ToCreatorType(t string) (*CreatorTypeEnum, error) {
 	case CreatorType.Translator.String():
 		return &CreatorType.Translator, nil
 	}
-	return nil, fmt.Errorf("invalid <creator/> attr. attr => xlink:actuate actuate=%s", t)
+	return nil, fmt.Errorf("can not convert to CreatorType. t=%s", t)
 }
 
 func AllCreatorTypeEnumValues() []CreatorTypeEnum {
